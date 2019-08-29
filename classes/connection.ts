@@ -1,7 +1,7 @@
 const Pool = require('pg').Pool
 
 export const pool = new Pool({
-    user: 'milh',
+    user: 'admin',
     password: 'admin',
     host: 'localhost',
     database: 'cromatografia',
