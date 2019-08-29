@@ -32,7 +32,7 @@ const todos = (request, response) => {
 const porId = (request, response) => {
     const id = parseInt(request.params.id);
 
-    pool.query('SELECT * FROM usuario u INNER JOIN lote l ON u.id = l.id_usuario  WHERE u.id=$1',
+    pool.query('SELECT * FROM usuario u INNER JOIN lote l ON u.id = l.id_usuario WHERE u.id=$1',
     [id], (error, results) => {
         if (error){
             throw error;
