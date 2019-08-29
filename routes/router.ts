@@ -1,9 +1,11 @@
 import { Router } from 'express';
 
 const usuario = require('../classes/Usuario');
+const lote = require('../classes/Lote');
 
 const router = Router();
 
+/* USUARIO */
 router.post('/usuario/nuevo', usuario.crear);
 router.get('/usuario/todos', usuario.todos);
 router.get('/usuario/por/:id', usuario.porId);
@@ -12,5 +14,8 @@ router.get('/usuario/por/rol', usuario.porRol); /* Admin = 1, Experto = 2, U_Rep
 router.get('/usuario/por/nombreyrol', usuario.porNombreYRol)
 router.put('/usuario/:id', usuario.editar);
 router.delete('/usuario/:id', usuario.eliminar);
+
+/* LOTE */
+router.post('/lote/nuevo', lote.crear);
 
 export default router;
