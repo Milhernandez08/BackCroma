@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = require("./connection");
 /* INICIO PARA CREAR LOTE */
 const crear = (request, response) => {
-    const { pais, estado, municipio, nombre } = request.body;
-    if (pais && estado && municipio && nombre) {
-        connection_1.pool.query('INSERT INTO usuario(pais, estado, municipio, nombre) VALUES($1, $2, $3, $4)', [pais, estado, municipio, nombre], (error, results) => {
+    const { id_usuario, pais, estado, municipio, nombre } = request.body;
+    if (id_usuario && pais && estado && municipio && nombre) {
+        connection_1.pool.query('INSERT INTO usuario(id_usuario, pais, estado, municipio, nombre) VALUES($1, $2, $3, $4)', [id_usuario, pais, estado, municipio, nombre], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -13,7 +13,7 @@ const crear = (request, response) => {
         });
     }
     else {
-        response.status(200).json("se requiere pais, estado, municipio, nombre");
+        response.status(200).json("se requiere id_usuario, pais, estado, municipio, nombre");
     }
 };
 /* FIN PARA CREAR LOTE */
