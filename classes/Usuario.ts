@@ -1,10 +1,10 @@
 import { pool } from "./connection";
 
 const login = (request, response) => {
-    const { correo, contraseña } = request.body;
-    if ( correo && contraseña ) {
-        pool.query('SELECT * FROM usuario WHERE correo = $1 AND contraseña = $2',
-        [correo, contraseña], (error, results) => {
+    const { correo, contrasena } = request.body;
+    if ( correo && contrasena ) {
+        pool.query('SELECT * FROM usuario WHERE correo = $1 AND contrasena = $2',
+        [correo, contrasena], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -12,17 +12,17 @@ const login = (request, response) => {
         });
     }
     else {
-        response.status(200).json("se requiere: correo, contraseña");
+        response.status(200).json("se requiere: correo, contrasena");
     }
 }
 
 /* INICIO PARA CREAR USUARIO */
 const crear = (request, response) => {
-    const { nombre, ape_pat, ape_mat, correo, rol, contraseña } = request.body;
+    const { nombre, ape_pat, ape_mat, correo, rol, contrasena } = request.body;
 
-    if (nombre && ape_pat && ape_mat && correo && rol && contraseña) {
-        pool.query('INSERT INTO usuario(nombre, ape_pat, ape_mat, correo, rol, contraseña) VALUES($1, $2, $3, $4, $5, $6)',
-        [nombre, ape_pat, ape_mat, correo, rol, contraseña], (error, results) => {
+    if (nombre && ape_pat && ape_mat && correo && rol && contrasena) {
+        pool.query('INSERT INTO usuario(nombre, ape_pat, ape_mat, correo, rol, contrasena) VALUES($1, $2, $3, $4, $5, $6)',
+        [nombre, ape_pat, ape_mat, correo, rol, contrasena], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -30,7 +30,7 @@ const crear = (request, response) => {
         });
     }
     else {
-        response.status(200).json("se requiere nombre, ape_pat, ape_mat, correo, rol, contraseña");
+        response.status(200).json("se requiere nombre, ape_pat, ape_mat, correo, rol, contrasena");
     }
 }
 /* FIN PARA CREAR USUARIO */
@@ -107,11 +107,11 @@ const informacionTotal = (request, response) => {
 /* INICIO PARA EDITAR USUARIOS */
 const editar = (request, response) => {
     const id = parseInt(request.params.id);
-    const { nombre, ape_pat, ape_mat, correo, rol, contraseña } = request.body;
+    const { nombre, ape_pat, ape_mat, correo, rol, contrasena } = request.body;
 
-    if (nombre && ape_pat && ape_mat && correo && rol && contraseña) {
-        pool.query('UPDATE usuario SET nombre=$1, ape_pat=$2, ape_mat=$3, correo=$4, rol=$5, contraseña=$6 WHERE id=$7',
-        [nombre, ape_pat, ape_mat, correo, rol, contraseña, id], (error, results) => {
+    if (nombre && ape_pat && ape_mat && correo && rol && contrasena) {
+        pool.query('UPDATE usuario SET nombre=$1, ape_pat=$2, ape_mat=$3, correo=$4, rol=$5, contrasena=$6 WHERE id=$7',
+        [nombre, ape_pat, ape_mat, correo, rol, contrasena, id], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -119,7 +119,7 @@ const editar = (request, response) => {
         });
     }
     else {
-        response.status(200).json("Se requiere nombre, ape_pat, ape_mat, correo, rol, contraseña")
+        response.status(200).json("Se requiere nombre, ape_pat, ape_mat, correo, rol, contrasena")
     }
 }
 /* FIN PARA EDITAR USUARIOS */
