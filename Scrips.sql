@@ -97,7 +97,7 @@ CREATE TABLE public.usuario
     ape_mat varchar NOT NULL,
     correo varchar NOT NULL,
     rol integer NOT NULL,
-    contraseña varchar NOT NULL,
+    contrasena varchar NOT NULL,
     PRIMARY KEY (id)
 )
 WITH (
