@@ -1,5 +1,21 @@
 import { pool } from "./connection";
 
+const login = (request, response) => {
+    const { correo, contraseña } = request.body;
+    if ( correo && contraseña ) {
+        pool.query('SELECT * FROM usuario WHERE correo = $1 AND contraseña = $2',
+        [correo, contraseña], (error, results) => {
+            if (error) {
+                throw error;
+            }
+            response.status(200).json(results.rows);
+        });
+    }
+    else {
+        response.status(200).json("se requiere: correo, contraseña");
+    }
+}
+
 /* INICIO PARA CREAR USUARIO */
 const crear = (request, response) => {
     const { nombre, ape_pat, ape_mat, correo, rol } = request.body;
@@ -121,6 +137,7 @@ const eliminar = (request, response) => {
 }
 /* FIN PARA ELIMINAR USUARIOS */
 module.exports = {
+    login,
     crear,
     todos,
     porId,

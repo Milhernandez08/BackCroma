@@ -6,6 +6,7 @@ const lote = require('../classes/Lote');
 const router = Router();
 
 /* USUARIO */
+router.post("/login", usuario.login);
 router.post('/usuario/nuevo', usuario.crear);
 router.get('/usuario/todos', usuario.todos);
 router.get('/usuario/:id', usuario.porId);
