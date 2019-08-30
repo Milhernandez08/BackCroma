@@ -1,11 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = require("./connection");
+const login = (request, response) => {
+    const { correo, contraseña } = request.body;
+    if (correo && contraseña) {
+        connection_1.pool.query('SELECT * FROM usuario WHERE correo = $1 AND contraseña = $2', [correo, contraseña], (error, results) => {
+            if (error) {
+                throw error;
+            }
+            response.status(200).json(results.rows);
+        });
+    }
+    else {
+        response.status(200).json("se requiere: correo, contraseña");
+    }
+};
 /* INICIO PARA CREAR USUARIO */
 const crear = (request, response) => {
-    const { nombre, ape_pat, ape_mat, correo, rol } = request.body;
-    if (nombre && ape_pat && ape_mat && correo && rol) {
-        connection_1.pool.query('INSERT INTO usuario(nombre, ape_pat, ape_mat, correo, rol) VALUES($1, $2, $3, $4, $5)', [nombre, ape_pat, ape_mat, correo, rol], (error, results) => {
+    const { nombre, ape_pat, ape_mat, correo, rol, contraseña } = request.body;
+    if (nombre && ape_pat && ape_mat && correo && rol && contraseña) {
+        connection_1.pool.query('INSERT INTO usuario(nombre, ape_pat, ape_mat, correo, rol, contraseña) VALUES($1, $2, $3, $4, $5, $6)', [nombre, ape_pat, ape_mat, correo, rol, contraseña], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -13,7 +27,7 @@ const crear = (request, response) => {
         });
     }
     else {
-        response.status(200).json("se requiere nombre, ape_pat, ape_mat, correo, rol");
+        response.status(200).json("se requiere nombre, ape_pat, ape_mat, correo, rol, contraseña");
     }
 };
 /* FIN PARA CREAR USUARIO */
@@ -28,8 +42,7 @@ const todos = (request, response) => {
 };
 const porId = (request, response) => {
     const id = parseInt(request.params.id);
-    console.log(id);
-    connection_1.pool.query('SELECT * FROM usuario u INNER JOIN lote l ON u.id = l.id_usuario WHERE u.id=$1', [id], (error, results) => {
+    connection_1.pool.query('SELECT * FROM usuario WHERE id=$1', [id], (error, results) => {
         if (error) {
             throw error;
         }
@@ -37,7 +50,6 @@ const porId = (request, response) => {
     });
 };
 const porNombre = (request, response) => {
-    //const { nombre } = request.body;
     const nombre = request.params.nombre;
     connection_1.pool.query('SELECT * FROM usuario WHERE nombre=$1', [nombre], (error, results) => {
         if (error) {
@@ -47,9 +59,7 @@ const porNombre = (request, response) => {
     });
 };
 const porRol = (request, response) => {
-    //const { rol } = request.body;
     const rol = request.params.rol;
-    console.log(rol);
     connection_1.pool.query('SELECT * FROM usuario WHERE rol=$1', [rol], (error, results) => {
         if (error) {
             throw error;
@@ -58,10 +68,19 @@ const porRol = (request, response) => {
     });
 };
 const porNombreYRol = (request, response) => {
-    //const {nombre, rol} = request.body;
     const nombre = request.params.nombre;
     const rol = request.params.rol;
     connection_1.pool.query('SELECT * FROM usuario WHERE nombre=$1 AND rol=$2', [nombre, rol], (error, results) => {
+        if (error) {
+            throw error;
+        }
+        response.status(200).json(results.rows);
+    });
+};
+const informacionTotal = (request, response) => {
+    const id = parseInt(request.params.id);
+    console.log(id);
+    connection_1.pool.query('SELECT * FROM usuario u INNER JOIN lote l ON u.id = l.id_usuario WHERE u.id=$1', [id], (error, results) => {
         if (error) {
             throw error;
         }
@@ -72,9 +91,9 @@ const porNombreYRol = (request, response) => {
 /* INICIO PARA EDITAR USUARIOS */
 const editar = (request, response) => {
     const id = parseInt(request.params.id);
-    const { nombre, ape_pat, ape_mat, correo, rol } = request.body;
-    if (nombre && ape_pat && ape_mat && correo && rol) {
-        connection_1.pool.query('UPDATE usuario SET nombre=$1, ape_pat=$2, ape_mat=$3, correo=$4, rol=$5 WHERE id=$6', [nombre, ape_pat, ape_mat, correo, rol, id], (error, results) => {
+    const { nombre, ape_pat, ape_mat, correo, rol, contraseña } = request.body;
+    if (nombre && ape_pat && ape_mat && correo && rol && contraseña) {
+        connection_1.pool.query('UPDATE usuario SET nombre=$1, ape_pat=$2, ape_mat=$3, correo=$4, rol=$5, contraseña=$6 WHERE id=$7', [nombre, ape_pat, ape_mat, correo, rol, contraseña, id], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -82,7 +101,7 @@ const editar = (request, response) => {
         });
     }
     else {
-        response.status(200).json("Se requiere nombre, ape_pat, ape_mat, correo, rol");
+        response.status(200).json("Se requiere nombre, ape_pat, ape_mat, correo, rol, contraseña");
     }
 };
 /* FIN PARA EDITAR USUARIOS */
@@ -98,12 +117,14 @@ const eliminar = (request, response) => {
 };
 /* FIN PARA ELIMINAR USUARIOS */
 module.exports = {
+    login,
     crear,
     todos,
     porId,
     porNombre,
     porRol,
     porNombreYRol,
+    informacionTotal,
     editar,
     eliminar
 };

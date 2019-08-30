@@ -18,11 +18,11 @@ const login = (request, response) => {
 
 /* INICIO PARA CREAR USUARIO */
 const crear = (request, response) => {
-    const { nombre, ape_pat, ape_mat, correo, rol } = request.body;
+    const { nombre, ape_pat, ape_mat, correo, rol, contraseña } = request.body;
 
-    if (nombre && ape_pat && ape_mat && correo && rol) {
-        pool.query('INSERT INTO usuario(nombre, ape_pat, ape_mat, correo, rol) VALUES($1, $2, $3, $4, $5)',
-        [nombre, ape_pat, ape_mat, correo, rol], (error, results) => {
+    if (nombre && ape_pat && ape_mat && correo && rol && contraseña) {
+        pool.query('INSERT INTO usuario(nombre, ape_pat, ape_mat, correo, rol, contraseña) VALUES($1, $2, $3, $4, $5, $6)',
+        [nombre, ape_pat, ape_mat, correo, rol, contraseña], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -30,7 +30,7 @@ const crear = (request, response) => {
         });
     }
     else {
-        response.status(200).json("se requiere nombre, ape_pat, ape_mat, correo, rol");
+        response.status(200).json("se requiere nombre, ape_pat, ape_mat, correo, rol, contraseña");
     }
 }
 /* FIN PARA CREAR USUARIO */
