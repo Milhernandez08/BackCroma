@@ -75,11 +75,11 @@ ALTER TABLE public.muestra
 CREATE TABLE public.lote
 (
     id serial NOT NULL,
-    id_usuario integer NOT NULL,
+    userid integer NOT NULL,
     pais varchar NOT NULL,
     estado varchar NOT NULL,
     municipio varchar NOT NULL,
-    nombre varchar NOT NULL,
+    nombre_Lugar varchar NOT NULL,
     PRIMARY KEY (id)
 )
 WITH (
@@ -97,6 +97,7 @@ CREATE TABLE public.usuario
     ape_mat varchar NOT NULL,
     correo varchar NOT NULL,
     rol integer NOT NULL,
+    contraseña varchar NOT NULL,
     PRIMARY KEY (id)
 )
 WITH (
