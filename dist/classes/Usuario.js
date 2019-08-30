@@ -80,7 +80,7 @@ const porNombreYRol = (request, response) => {
 const informacionTotal = (request, response) => {
     const id = parseInt(request.params.id);
     console.log(id);
-    connection_1.pool.query('SELECT * FROM usuario u INNER JOIN lote l ON u.id = l.userid WHERE u.id=$1', [id], (error, results) => {
+    connection_1.pool.query('SELECT * FROM usuario u INNER JOIN lote l ON u.id = l.userid INNER JOIN muestra m ON l.id = m.id_lote INNER JOIN croma_nn c ON m.id = c.id_muestra WHERE u.id=$1', [id], (error, results) => {
         if (error) {
             throw error;
         }
