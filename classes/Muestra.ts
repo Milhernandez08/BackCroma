@@ -2,11 +2,11 @@ import { pool } from "./connection";
 
 /* INICIO PARA CREAR MUESTRA */
 const crear = (request, response) => {
-    const { id_lote, loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo, num_img } = request.body;
+    const { id_lote, loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo } = request.body;
 
-    if (id_lote && loc_gps && profundidad && fecha && asnm && clima && uso_suelo && tipo_suelo && num_img) {
-        pool.query('INSERT INTO muestra(id_lote, loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo, num_img) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-        [id_lote, loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo, num_img], (error, results) => {
+    if (id_lote && loc_gps && profundidad && fecha && asnm && clima && uso_suelo && tipo_suelo) {
+        pool.query('INSERT INTO muestra(id_lote, loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)',
+        [id_lote, loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -14,7 +14,7 @@ const crear = (request, response) => {
         });
     }
     else {
-        response.status(200).json("se requiere id_lote, loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo, num_img");
+        response.status(200).json("se requiere id_lote, loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo");
     }
 }
 /* FIN PARA CREAR MUESTRA */
@@ -44,11 +44,11 @@ const porId = (request, response) => {
 /* INICIO PARA EDITAR MUESTRA */
 const editar = (request, response) => {
     const id = parseInt(request.params.id);
-    const { loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo, num_img } = request.body;
+    const { loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo } = request.body;
 
-    if (loc_gps && profundidad && fecha && asnm && clima && uso_suelo && tipo_suelo && num_img) {
+    if (loc_gps && profundidad && fecha && asnm && clima && uso_suelo && tipo_suelo) {
         pool.query('UPDATE muestra SET pais=$1, estado=$2, municipio=$3, nombre_lugar=$4 WHERE id=$5',
-        [loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo, num_img, id], (error, results) => {
+        [loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo, id], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -56,7 +56,7 @@ const editar = (request, response) => {
         });
     }
     else {
-        response.status(200).json("Se requiere loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo, num_img")
+        response.status(200).json("Se requiere loc_gps, profundidad, fecha, asnm, clima, uso_suelo, tipo_suelo")
     }
 }
 /* FIN PARA EDITAR MUESTRA */

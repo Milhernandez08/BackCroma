@@ -3,9 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = require("./connection");
 /* INICIO PARA CREAR CROMA */
 const crear = (request, response) => {
-    const { id_muestra, ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n } = request.body;
-    if (id_muestra && ind_oxg && ind_mat_org && ind_trans_sust && ind_n_elem && ind_romp && ind_mat_viva && ind_bio && ind_pro_n) {
-        connection_1.pool.query('INSERT INTO croma_nn(id_muestra, ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)', [id_muestra, ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n], (error, results) => {
+    const { id_muestra, ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n, nom_img } = request.body;
+    const veri = 0;
+    const eliminado = 0;
+    if (id_muestra && ind_oxg && ind_mat_org && ind_trans_sust && ind_n_elem && ind_romp && ind_mat_viva && ind_bio && ind_pro_n && nom_img) {
+        connection_1.pool.query('INSERT INTO croma_nn(id_muestra, ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n, veri, eliminado, nom_img) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)', [id_muestra, ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n, veri, eliminado, nom_img], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -13,7 +15,7 @@ const crear = (request, response) => {
         });
     }
     else {
-        response.status(200).json("se requiere id_muestra, ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n");
+        response.status(200).json("se requiere id_muestra, ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n, nom_img");
     }
 };
 /* FIN PARA CREAR CROMA */
@@ -39,9 +41,9 @@ const porId = (request, response) => {
 /* INICIO PARA EDITAR CROMA */
 const editar = (request, response) => {
     const id = parseInt(request.params.id);
-    const { ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n } = request.body;
-    if (ind_oxg && ind_mat_org && ind_trans_sust && ind_n_elem && ind_romp && ind_mat_viva && ind_bio && ind_pro_n) {
-        connection_1.pool.query('UPDATE croma_nn SET ind_oxg=$1, ind_mat_org=$2, ind_trans_sust=$3, ind_n_elem=$4, ind_romp=$5, ind_mat_viva=$6, ind_bio=$7, ind_pro_n=$8 WHERE id=$9', [ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n, id], (error, results) => {
+    const { ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n, veri, eliminado, nom_img } = request.body;
+    if (ind_oxg && ind_mat_org && ind_trans_sust && ind_n_elem && ind_romp && ind_mat_viva && ind_bio && ind_pro_n && veri && eliminado && nom_img) {
+        connection_1.pool.query('UPDATE croma_nn SET ind_oxg=$1, ind_mat_org=$2, ind_trans_sust=$3, ind_n_elem=$4, ind_romp=$5, ind_mat_viva=$6, ind_bio=$7, ind_pro_n=$8, veri=$9, eliminado=$10, nom_img=$11 WHERE id=$12', [ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n, veri, eliminado, nom_img, id], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -49,7 +51,7 @@ const editar = (request, response) => {
         });
     }
     else {
-        response.status(200).json("Se requiere ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n");
+        response.status(200).json("Se requiere ind_oxg, ind_mat_org, ind_trans_sust, ind_n_elem, ind_romp, ind_mat_viva, ind_bio, ind_pro_n, veri, eliminado, nom_img");
     }
 };
 /* FIN PARA EDITAR CROMA */

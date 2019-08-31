@@ -10,6 +10,9 @@ CREATE TABLE public.croma_nn
     ind_mat_viva integer NOT NULL,
     ind_bio integer NOT NULL,
     ind_pro_n integer NOT NULL,
+    veri integer NOT NULL, 
+    eliminado integer NOT NULL, 
+    nom_img varchar NOT NULL,
     PRIMARY KEY (id)
 )
 WITH (
