@@ -6,7 +6,7 @@ CREATE TABLE public.croma_nn
     ind_mat_org integer NOT NULL,
     ind_trans_sust integer NOT NULL,
     ind_n_elem integer NOT NULL,
-    ind_romp integer NOT NULL,
+    ind_romp integer NOT NULL,.
     ind_mat_viva integer NOT NULL,
     ind_bio integer NOT NULL,
     ind_pro_n integer NOT NULL,
