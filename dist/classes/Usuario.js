@@ -15,17 +15,6 @@ const login = (request, response) => {
         response.status(200).json("se requiere: correo, contrasena");
     }
 };
-const iniciarSesion = (request, response) => {
-    const { correo, contrasena } = request.body;
-    connection_1.pool.query('SELECT id FROM usuario WHERE correo = ' + "'" + correo + "' AND contrasena = '" + contrasena + "'", function (error, result) {
-        if (error) {
-            throw error;
-        }
-        else {
-            response.status(200).json(result[0]);
-        }
-    });
-};
 /* INICIO PARA CREAR USUARIO */
 const crear = (request, response) => {
     const { nombre, ape_pat, ape_mat, correo, rol, contrasena } = request.body;
@@ -129,7 +118,6 @@ const eliminar = (request, response) => {
 /* FIN PARA ELIMINAR USUARIOS */
 module.exports = {
     login,
-    iniciarSesion,
     crear,
     todos,
     porId,

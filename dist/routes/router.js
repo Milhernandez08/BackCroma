@@ -14,7 +14,6 @@ router.get('/usuario/rol/:rol', usuario.porRol); /* Admin = 1, Experto = 2, U_Re
 router.get('/usuario/nombre-y-rol/:nombre/:rol', usuario.porNombreYRol);
 router.get('/usuario/informacion/:id', usuario.informacionTotal);
 router.post("/login", usuario.login);
-router.post("/login2", usuario.iniciarSesion);
 router.post('/usuario/nuevo', usuario.crear);
 router.put('/usuario/:id', usuario.editar);
 router.delete('/usuario/:id', usuario.eliminar);
