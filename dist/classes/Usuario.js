@@ -51,9 +51,9 @@ const porNombreYRol = (request, response) => {
 /* INICIO PARA EDITAR USUARIOS */
 const editar = (request, response) => {
     const id = parseInt(request.params.id);
-    const { nombre, ape_pat, ape_mat, correo, rol, contrasena } = request.body;
-    if (nombre && ape_pat && ape_mat && correo && rol && contrasena) {
-        connection_1.pool.query('UPDATE usuario SET nombre=$1, ape_pat=$2, ape_mat=$3, correo=$4, rol=$5, contrasena=$6 WHERE id=$7', [nombre, ape_pat, ape_mat, correo, rol, contrasena, id], (error, results) => {
+    const { img_perfil, nombre, ape_pat, ape_mat, correo, contrasena, id_pais, id_estado, id_municipio, direccion, telefono, rol, id_lider, activo, eliminado } = request.body;
+    if (img_perfil && nombre && ape_pat && ape_mat && correo && contrasena && id_pais && id_estado && id_municipio && direccion && telefono && rol && id_lider && activo && eliminado) {
+        connection_1.pool.query('UPDATE usuario SET img_perfil=$1, nombre=$2, ape_pat=$3, ape_mat=$4, correo=$5, contrasena=$6, id_pais=$7, id_estado=$8, id_municipio=$9, direccion=$10, telefono=$11, rol=$12, id_lider=$13, activo=$14, eliminado=$15 WHERE id=$7', [img_perfil, nombre, ape_pat, ape_mat, correo, contrasena, id_pais, id_estado, id_municipio, direccion, telefono, rol, id_lider, activo, eliminado, id], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -61,7 +61,7 @@ const editar = (request, response) => {
         });
     }
     else {
-        response.status(200).json("Se requiere nombre, ape_pat, ape_mat, correo, rol, contrasena");
+        response.status(200).json("Se requiere img_perfil, nombre, ape_pat, ape_mat, correo, contrasena, id_pais, id_estado, id_municipio, direccion, telefono, rol, id_lider, activo, eliminado");
     }
 };
 /* FIN PARA EDITAR USUARIOS */
