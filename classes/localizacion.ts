@@ -1,12 +1,13 @@
 import { pool } from "./connection";
 
+//id_user, id_lote, nombre, latitud, longitud, eliminado
 
 const crear = (request, response) => {
-    const { id_usuario, pais, estado, municipio, nombre } = request.body;
+    const { id_user, id_lote, nombre, latitud, longitud, eliminado } = request.body;
 
-    if (id_usuario && pais && estado && municipio && nombre) {
-        pool.query('INSERT INTO lote(id_usuario, pais, estado, municipio, nombre) VALUES($1, $2, $3, $4)',
-        [id_usuario, pais, estado, municipio, nombre], (error, results) => {
+    if (id_user && id_lote && nombre && latitud && longitud && eliminado) {
+        pool.query('INSERT INTO localizacion(id_user, id_lote, nombre, latitud, longitud, eliminado) VALUES($1, $2, $3, $4, $5, $6)',
+        [id_user, id_lote, nombre, latitud, longitud, eliminado], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -14,13 +15,12 @@ const crear = (request, response) => {
         });
     }
     else {
-        response.status(200).json("se requiere id_usuario, pais, estado, municipio, nombre");
+        response.status(200).json("se requiere id_user, id_lote, nombre, latitud, longitud, eliminado");
     }
 }
 
-
 const todos = (request, response) => {
-    pool.query('SELECT * FROM lote', (error, results) => {
+    pool.query('SELECT * FROM localizacion WHERE eliminado=0', (error, results) => {
         if (error) {
             throw error;
         }
@@ -31,14 +31,13 @@ const todos = (request, response) => {
 const porId = (request, response) => {
     const id = parseInt(request.params.id);
     
-    pool.query('SELECT * FROM lote WHERE id=$1', [id], (error, results) => {
+    pool.query('SELECT * FROM localizacion WHERE id=$1', [id], (error, results) => {
         if (error){
             throw error;
         }
         response.status(200).json(results.rows);
     });
 }
-
 
 const editar = (request, response) => {
     const id = parseInt(request.params.id);
@@ -58,22 +57,3 @@ const editar = (request, response) => {
     }
 }
 
-
-const eliminar = (request, response) => {
-    const id = parseInt(request.params.id);
-
-    pool.query('DELETE FROM lote WHERE id=$1', [id], (error, results) => {
-        if (error) {
-            throw error;
-        }
-        response.status(200).json("Se Elimino el lote Correctamente");
-    });
-}
-
-module.exports = {
-    crear,
-    todos,
-    porId,
-    editar,
-    eliminar
-}

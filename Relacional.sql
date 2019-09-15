@@ -57,7 +57,6 @@ ALTER TABLE public.estado
 CREATE TABLE public.municipio
 (
     id serial NOT NULL,
-    id_pais integer NOT NULL,
     id_estado integer NOT NULL,
     nombre varchar NOT NULL,
     PRIMARY KEY (id)

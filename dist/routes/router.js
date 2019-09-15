@@ -18,6 +18,9 @@ router.get('/municipios/todos/:id_estado', municipios.todos);
 router.get('/municipios/:id', municipios.porId);
 /* USUARIO */
 router.get('/usuario/todos', usuario.todos);
+router.get('/usuario/Activos', usuario.todosActivos);
+router.get('/usuario/InActivos', usuario.todosInActivos);
+router.get('/usuario/Eliminados', usuario.todosEliminados);
 router.get('/usuario/:id', usuario.porId);
 router.get('/usuario/nombre/:nombre', usuario.porNombre);
 router.get('/usuario/rol/:rol', usuario.porRol); /* Admin = 1, Experto = 2, U_Rep = 3, U_Final = 4 */

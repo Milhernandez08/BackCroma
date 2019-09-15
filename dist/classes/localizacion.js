@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = require("./connection");
+//id_user, id_lote, nombre, latitud, longitud, eliminado
 const crear = (request, response) => {
-    const { id_usuario, pais, estado, municipio, nombre } = request.body;
-    if (id_usuario && pais && estado && municipio && nombre) {
-        connection_1.pool.query('INSERT INTO lote(id_usuario, pais, estado, municipio, nombre) VALUES($1, $2, $3, $4)', [id_usuario, pais, estado, municipio, nombre], (error, results) => {
+    const { id_user, id_lote, nombre, latitud, longitud, eliminado } = request.body;
+    if (id_user && id_lote && nombre && latitud && longitud && eliminado) {
+        connection_1.pool.query('INSERT INTO localizacion(id_user, id_lote, nombre, latitud, longitud, eliminado) VALUES($1, $2, $3, $4, $5, $6)', [id_user, id_lote, nombre, latitud, longitud, eliminado], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -12,11 +13,11 @@ const crear = (request, response) => {
         });
     }
     else {
-        response.status(200).json("se requiere id_usuario, pais, estado, municipio, nombre");
+        response.status(200).json("se requiere id_user, id_lote, nombre, latitud, longitud, eliminado");
     }
 };
 const todos = (request, response) => {
-    connection_1.pool.query('SELECT * FROM lote', (error, results) => {
+    connection_1.pool.query('SELECT * FROM localizacion WHERE eliminado=0', (error, results) => {
         if (error) {
             throw error;
         }
@@ -25,7 +26,7 @@ const todos = (request, response) => {
 };
 const porId = (request, response) => {
     const id = parseInt(request.params.id);
-    connection_1.pool.query('SELECT * FROM lote WHERE id=$1', [id], (error, results) => {
+    connection_1.pool.query('SELECT * FROM localizacion WHERE id=$1', [id], (error, results) => {
         if (error) {
             throw error;
         }
@@ -46,20 +47,4 @@ const editar = (request, response) => {
     else {
         response.status(200).json("Se requiere pais, estado, municipio, nombre_lugar");
     }
-};
-const eliminar = (request, response) => {
-    const id = parseInt(request.params.id);
-    connection_1.pool.query('DELETE FROM lote WHERE id=$1', [id], (error, results) => {
-        if (error) {
-            throw error;
-        }
-        response.status(200).json("Se Elimino el lote Correctamente");
-    });
-};
-module.exports = {
-    crear,
-    todos,
-    porId,
-    editar,
-    eliminar
 };

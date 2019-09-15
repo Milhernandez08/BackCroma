@@ -1,9 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = require("./connection");
-/* INICIO PARA OBTENER USUARIOS */
 const todos = (request, response) => {
     connection_1.pool.query('SELECT * FROM usuario', (error, results) => {
+        if (error) {
+            throw error;
+        }
+        response.status(200).json(results.rows);
+    });
+};
+const todosActivos = (request, response) => {
+    connection_1.pool.query('SELECT * FROM usuario WHERE activo=1 AND eliminado=0', (error, results) => {
+        if (error) {
+            throw error;
+        }
+        response.status(200).json(results.rows);
+    });
+};
+const todosInActivos = (request, response) => {
+    connection_1.pool.query('SELECT * FROM usuario WHERE activo=0 AND eliminado=0', (error, results) => {
+        if (error) {
+            throw error;
+        }
+        response.status(200).json(results.rows);
+    });
+};
+const todosEliminados = (request, response) => {
+    connection_1.pool.query('SELECT * FROM usuario WHERE eliminado=1', (error, results) => {
         if (error) {
             throw error;
         }
@@ -40,15 +63,13 @@ const porRol = (request, response) => {
 const porNombreYRol = (request, response) => {
     const nombre = request.params.nombre;
     const rol = request.params.rol;
-    connection_1.pool.query('SELECT * FROM usuario WHERE nombre=$1 AND rol=$2', [nombre, rol], (error, results) => {
+    connection_1.pool.query('SELECT * FROM usuario WHERE nombre=$1 AND rol=$2 AND ', [nombre, rol], (error, results) => {
         if (error) {
             throw error;
         }
         response.status(200).json(results.rows);
     });
 };
-/* FIN PARA OBTENER USUARIOS */
-/* INICIO PARA EDITAR USUARIOS */
 const editar = (request, response) => {
     const id = parseInt(request.params.id);
     const { img_perfil, nombre, ape_pat, ape_mat, correo, contrasena, id_pais, id_estado, id_municipio, direccion, telefono, rol, id_lider, activo, eliminado } = request.body;
@@ -64,20 +85,20 @@ const editar = (request, response) => {
         response.status(200).json("Se requiere img_perfil, nombre, ape_pat, ape_mat, correo, contrasena, id_pais, id_estado, id_municipio, direccion, telefono, rol, id_lider, activo, eliminado");
     }
 };
-/* FIN PARA EDITAR USUARIOS */
-/* INICIO PARA ELIMINAR USUARIOS */
 const eliminar = (request, response) => {
     const id = parseInt(request.params.id);
-    connection_1.pool.query('DELETE FROM usuario WHERE id=$1', [id], (error, results) => {
+    connection_1.pool.query('UPDATE usuario SET activo=0, eliminado=1 WHERE id=$1', [id], (error, results) => {
         if (error) {
             throw error;
         }
         response.status(200).json("Se Elimino el Usuario Correctamente");
     });
 };
-/* FIN PARA ELIMINAR USUARIOS */
 module.exports = {
     todos,
+    todosActivos,
+    todosInActivos,
+    todosEliminados,
     porId,
     porNombre,
     porRol,
