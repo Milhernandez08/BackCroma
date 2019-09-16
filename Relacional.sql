@@ -98,7 +98,7 @@ CREATE TABLE public.lote
     longitud NUMERIC (10,8),
     latitud NUMERIC (10,8),
     nombre varchar NOT NULL,
-    tipo_suelo varchar NOT NULL,
+    id_tipo_suelo varchar NOT NULL,
     uso_suelo varchar NOT NULL,
     eliminado integer NOT NULL,
     PRIMARY KEY (id)
@@ -179,4 +179,34 @@ WITH (
 );
 
 ALTER TABLE public.identificacion
+    OWNER to milh;
+
+CREATE TABLE public.clima
+(
+    id serial NOT NULL,
+    id_estado integer NOT NULL,
+    nombre varchar NOT NULL,
+    PRIMARY KEY (id)
+    
+)
+WITH (
+    OIDS = FALSE
+);
+
+ALTER TABLE public.clima
+    OWNER to milh;
+
+CREATE TABLE public.suelo
+(
+    id serial NOT NULL,
+    id_estado integer NOT NULL,
+    nombre varchar NOT NULL,
+    PRIMARY KEY (id)
+    
+)
+WITH (
+    OIDS = FALSE
+);
+
+ALTER TABLE public.suelo
     OWNER to milh;

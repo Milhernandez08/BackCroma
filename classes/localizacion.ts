@@ -41,11 +41,11 @@ const porId = (request, response) => {
 
 const editar = (request, response) => {
     const id = parseInt(request.params.id);
-    const { pais, estado, municipio, nombre_lugar } = request.body;
+    const { id_user, id_lote, nombre, latitud, longitud } = request.body;
 
-    if (pais && estado && municipio && nombre_lugar) {
-        pool.query('UPDATE lote SET pais=$1, estado=$2, municipio=$3, nombre_lugar=$4 WHERE id=$5',
-        [pais, estado, municipio, nombre_lugar, id], (error, results) => {
+    if (id_user && id_lote && nombre && latitud && longitud ) {
+        pool.query('UPDATE localizacion SET id_user=$1, id_lote=$2, nombre=$3, latitud=$4, longitud=$5 WHERE id=$6',
+        [id_user, id_lote, nombre, latitud, longitud, id], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -53,7 +53,31 @@ const editar = (request, response) => {
         });
     }
     else {
-        response.status(200).json("Se requiere pais, estado, municipio, nombre_lugar")
+        response.status(200).json("Se requiere id_user, id_lote, nombre, latitud, longitud")
     }
 }
 
+const eliminar = (request, response) => {
+    const id = parseInt(request.params.id);
+
+    if (id) {
+        pool.query('UPDATE localizacion SET eliminado=1 WHERE id=$1',
+        [id], (error, results) => {
+            if (error) {
+                throw error;
+            }
+            response.status(200).json("Se elimino correctamente")
+        });
+    }
+    else {
+        response.status(200).json("Error al eliminar")
+    }
+}
+
+module.exports = {
+    crear,
+    todos,
+    porId,
+    editar,
+    eliminar
+}

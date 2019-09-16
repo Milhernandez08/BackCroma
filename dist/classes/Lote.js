@@ -2,9 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = require("./connection");
 const crear = (request, response) => {
-    const { id_usuario, pais, estado, municipio, nombre } = request.body;
-    if (id_usuario && pais && estado && municipio && nombre) {
-        connection_1.pool.query('INSERT INTO lote(id_usuario, pais, estado, municipio, nombre) VALUES($1, $2, $3, $4)', [id_usuario, pais, estado, municipio, nombre], (error, results) => {
+    const { id_user, id_pais, id_estado, id_municipio, longitud, latitud, nombre, tipo_suelo, uso_suelo } = request.body;
+    const eliminado = 0;
+    if (id_user && id_pais && id_estado && id_municipio && longitud && latitud && nombre && tipo_suelo && uso_suelo) {
+        connection_1.pool.query('INSERT INTO lote(id_user, id_pais, id_estado, id_municipio, longitud, latitud, nombre, tipo_suelo, uso_suelo, eliminado) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', [id_user, id_pais, id_estado, id_municipio, longitud, latitud, nombre, tipo_suelo, uso_suelo, eliminado], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -12,11 +13,11 @@ const crear = (request, response) => {
         });
     }
     else {
-        response.status(200).json("se requiere id_usuario, pais, estado, municipio, nombre");
+        response.status(200).json("se requiere id_user, id_pais, id_estado, id_municipio, longitud, latitud, nombre, tipo_suelo, uso_suelo");
     }
 };
 const todos = (request, response) => {
-    connection_1.pool.query('SELECT * FROM lote', (error, results) => {
+    connection_1.pool.query('SELECT * FROM lote WHERE eliminado=0', (error, results) => {
         if (error) {
             throw error;
         }
@@ -34,9 +35,9 @@ const porId = (request, response) => {
 };
 const editar = (request, response) => {
     const id = parseInt(request.params.id);
-    const { pais, estado, municipio, nombre_lugar } = request.body;
-    if (pais && estado && municipio && nombre_lugar) {
-        connection_1.pool.query('UPDATE lote SET pais=$1, estado=$2, municipio=$3, nombre_lugar=$4 WHERE id=$5', [pais, estado, municipio, nombre_lugar, id], (error, results) => {
+    const { id_user, id_pais, id_estado, id_municipio, longitud, latitud, nombre, tipo_suelo, uso_suelo } = request.body;
+    if (id_user && id_pais && id_estado && id_municipio && longitud && latitud && nombre && tipo_suelo && uso_suelo) {
+        connection_1.pool.query('UPDATE lote SET id_user=$1, id_pais=$2, id_estado=$3, id_municipio=$4, longitud=$5, latitud=$6, nombre=$7, tipo_suelo=$8, uso_suelo=$9 WHERE id=$10', [id_user, id_pais, id_estado, id_municipio, longitud, latitud, nombre, tipo_suelo, uso_suelo, id], (error, results) => {
             if (error) {
                 throw error;
             }
@@ -44,17 +45,22 @@ const editar = (request, response) => {
         });
     }
     else {
-        response.status(200).json("Se requiere pais, estado, municipio, nombre_lugar");
+        response.status(200).json("Se requiere id_user, id_pais, id_estado, id_municipio, longitud, latitud, nombre, tipo_suelo, uso_suelo");
     }
 };
 const eliminar = (request, response) => {
     const id = parseInt(request.params.id);
-    connection_1.pool.query('DELETE FROM lote WHERE id=$1', [id], (error, results) => {
-        if (error) {
-            throw error;
-        }
-        response.status(200).json("Se Elimino el lote Correctamente");
-    });
+    if (id) {
+        connection_1.pool.query('UPDATE lote SET eliminado=1 WHERE id=$1', [id], (error, results) => {
+            if (error) {
+                throw error;
+            }
+            response.status(200).json("Se elimino correctamente");
+        });
+    }
+    else {
+        response.status(200).json("Error al eliminar");
+    }
 };
 module.exports = {
     crear,
