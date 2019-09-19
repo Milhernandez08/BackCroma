@@ -23,7 +23,7 @@ const crear = (request, response) => {
 
 /* INICIO PARA OBTENER CROMA */
 const todos = (request, response) => {
-    pool.query('SELECT * FROM croma_nn', (error, results) => {
+    pool.query('SELECT * FROM croma_nn c INNER JOIN muestra m ON c.id_muestra=m.id', (error, results) => {
         if (error) {
             throw error;
         }
@@ -34,7 +34,7 @@ const todos = (request, response) => {
 const porId = (request, response) => {
     const id = parseInt(request.params.id);
     
-    pool.query('SELECT * FROM croma_nn WHERE id=$1', [id], (error, results) => {
+    pool.query('SELECT * FROM croma_nn c INNER JOIN muestra m ON c.id_muestra=m.id WHERE id=$1', [id], (error, results) => {
         if (error){
             throw error;
         }

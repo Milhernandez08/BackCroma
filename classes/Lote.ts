@@ -19,9 +19,9 @@ const crear = (request, response) => {
     }
 }
 
-
+// id_user, id_pais, id_estado, id_municipio, longitud, latitud, nombre, tipo_suelo, uso_suelo #Crear una tabla de tipo de suelo
 const todos = (request, response) => {
-    pool.query('SELECT * FROM lote WHERE eliminado=0', (error, results) => {
+    pool.query('SELECT * FROM lote l INNER JOIN usuario u ON l.id_user=u.id INNER JOIN pais p ON l.id_pais=p.id INNER JOIN estado e ON l.id_estado=e.id INNER JOIN municipio m ON l.id_municipio=m.id  WHERE eliminado=0', (error, results) => {
         if (error) {
             throw error;
         }
@@ -32,7 +32,7 @@ const todos = (request, response) => {
 const porId = (request, response) => {
     const id = parseInt(request.params.id);
     
-    pool.query('SELECT * FROM lote WHERE id=$1', [id], (error, results) => {
+    pool.query('SELECT * FROM lote l INNER JOIN usuario u ON l.id_user=u.id INNER JOIN pais p ON l.id_pais=p.id INNER JOIN estado e ON l.id_estado=e.id INNER JOIN municipio m ON l.id_municipio=m.idWHERE id=$1', [id], (error, results) => {
         if (error){
             throw error;
         }

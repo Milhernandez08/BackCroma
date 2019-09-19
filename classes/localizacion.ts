@@ -20,7 +20,7 @@ const crear = (request, response) => {
 }
 
 const todos = (request, response) => {
-    pool.query('SELECT * FROM localizacion WHERE eliminado=0', (error, results) => {
+    pool.query('SELECT * FROM localizacion l INNER JOIN usuario u ON l.id_user=u.id INNER JOIN lote lo ON l.id_lote=lo.id WHERE eliminado=0', (error, results) => {
         if (error) {
             throw error;
         }
@@ -31,7 +31,7 @@ const todos = (request, response) => {
 const porId = (request, response) => {
     const id = parseInt(request.params.id);
     
-    pool.query('SELECT * FROM localizacion WHERE id=$1', [id], (error, results) => {
+    pool.query('SELECT * FROM localizacion  l INNER JOIN usuario u ON l.id_user=u.id INNER JOIN lote lo ON l.id_lote=lo.id WHERE id=$1', [id], (error, results) => {
         if (error){
             throw error;
         }

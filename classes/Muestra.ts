@@ -21,7 +21,7 @@ const crear = (request, response) => {
 
 /* INICIO PARA OBTENER MUESTRA */
 const todos = (request, response) => {
-    pool.query('SELECT * FROM muestra', (error, results) => {
+    pool.query('SELECT * FROM muestra m INNER JOIN lote l ON m.id_lote=l.id', (error, results) => {
         if (error) {
             throw error;
         }
@@ -32,7 +32,7 @@ const todos = (request, response) => {
 const porId = (request, response) => {
     const id = parseInt(request.params.id);
     
-    pool.query('SELECT * FROM muestra WHERE id=$1', [id], (error, results) => {
+    pool.query('SELECT * FROM muestra m INNER JOIN lote l ON m.id_lote=l.id WHERE id=$1', [id], (error, results) => {
         if (error){
             throw error;
         }
