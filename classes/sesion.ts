@@ -10,7 +10,7 @@ function proteger(pass) {
 const login = (request, response) => {
     const { correo, contrasena } = request.body;
     if ( correo && contrasena ) {
-        pool.query('SELECT * FROM usuario WHERE correo = $1 AND contrasena = $2',
+        pool.query('SELECT * FROM usuario WHERE correo = $1 AND contrasena = $2 AND activo=1',
         [correo, proteger(contrasena)], (error, results) => {
             if (error) {
                 throw error;
