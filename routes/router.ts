@@ -29,6 +29,7 @@ router.get('/usuario/Activos', usuario.todosActivos);
 router.get('/usuario/InActivos', usuario.todosInActivos);
 router.get('/usuario/Eliminados', usuario.todosEliminados);
 router.get('/usuario/:id', usuario.porId);
+router.get('/usuario/lider/:id', usuario.porLider);
 router.get('/usuario/nombre/:nombre', usuario.porNombre);
 router.get('/usuario/rol/:rol', usuario.porRol);  //Admin = 1, Experto = 2, U_Rep = 3, U_Final = 4 
 router.get('/usuario/nombre-y-rol/:nombre/:rol', usuario.porNombreYRol);

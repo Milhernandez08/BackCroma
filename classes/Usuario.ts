@@ -47,6 +47,17 @@ const porId = (request, response) => {
     });
 }
 
+const porLider = (request, response) => {
+    const id = parseInt(request.params.id);
+    
+    pool.query('SELECT * FROM usuario WHERE id_lider=$1', [id], (error, results) => {
+        if (error){
+            throw error;
+        }
+        response.status(200).json(results.rows);
+    });
+}
+
 const porNombre = (request, response) => {
     const nombre = request.params.nombre;
     
@@ -119,6 +130,7 @@ module.exports = {
     todosInActivos,
     todosEliminados,
     porId,
+    porLider,
     porNombre,
     porRol,
     porNombreYRol,
